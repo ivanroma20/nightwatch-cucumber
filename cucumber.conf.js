@@ -18,6 +18,8 @@ Before(function () {
   client.resizeWindow(1920, 1080)
 })
 
+
+
 AfterAll(async () => {
   await closeSession();
   await stopWebDriver();
@@ -33,7 +35,7 @@ AfterAll(async () => {
         'Test Environment': 'Ambiente de Teste com Docker'
       }
     });
-  }, 0);
+  }, 1000);
 });
 
 After(function () {
@@ -48,3 +50,10 @@ After(function () {
       })
   })
 });
+
+After({ tags: '@logout' }, function() {
+  client.execute(function () {
+    window.localStorage.setItem('default_auth_token', '')
+    return true;
+  })
+})
